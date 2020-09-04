@@ -1,0 +1,101 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('course/index')}">课程列表</a></li>
+			<li><a href="{:url('course/add')}">添加课程</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="get" action="{:url('course/index')}">
+        	供应商：
+        	<select name='supplier_id' class="form-control">
+        		<option value="">请选择供应商</option>
+        		<foreach name="supplier_list" item="vo">
+        			<option value="{$vo.id}" <if condition="$supplier_id eq $vo.id">selected</if>>{$vo.name}</option>
+        		</foreach>
+        	</select>
+            课程ID:
+            <input type="text" class="form-control" name="id" style="width: 120px;" value="{:input('request.id/s','')}" placeholder="请输入课程ID">
+            短标题:
+            <input type="text" class="form-control" name="title" style="width: 120px;" value="{:input('request.title/s','')}" placeholder="请输入短标题">
+
+            状态：
+            <select name='status' class="form-control">
+            	<option value="">请选择状态</option>
+            	<option value="1" <if condition="$status eq 1">selected</if>>上架</option>
+            	<option value="2" <if condition="$status eq 2">selected</if>>下架</option>
+            </select>
+            <input type="submit" class="btn btn-primary" value="搜索" />
+        </form>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="80">课程ID</th>
+					<th>供应商</th>
+					<th>短标题</th>
+					<th>售价</th>
+					<th>佣金【元】</th>
+					<th>课程总量</th>
+					<th>实际销量</th>
+					<th>适合年龄</th>
+					<th>所属学科</th>
+					<th>排序[从小到大]</th>
+					<th>开始时间</th>
+					<th>结束时间</th>
+					<th width="80">状态</th>
+					<th width="200">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.supplier_name}</td>
+
+					<td>{$vo.title}</td>
+					<td>{$vo.sell_money}</td>
+					<td>{$vo.commission}</td>
+					<td>{$vo.inventory_number + $vo.basic_number}</td>
+					<td>{$vo.sales_number}</td>
+
+					<td>
+						<foreach name="$vo.age_stage_list" item='age'>
+							<p>{$age.name}</p>
+						</foreach>
+					</td>
+
+					<td>
+						<foreach name="$vo.subject_list" item='subject'>
+							<p>{$subject.name}</p>
+						</foreach>
+					</td>
+
+					<td>{$vo.sort}</td>
+					<td>{$vo.start_time}</td>
+					<td>{$vo.end_time}</td>
+					
+					<td>
+						<if condition="$vo.status eq 1">
+							<span class="label label-success">上架</span>
+						<else />
+							<span class="label label-danger">下架</span>
+						
+						</if>
+					</td>
+
+					<td>
+						<a href="{:url('course/add', ['id' => $vo.id])}">编辑</a>&nbsp;&nbsp;
+						<a href="{:url('course/codeIndex', ['id' => $vo.id])}">兑换码管理</a>&nbsp;&nbsp;
+						<a href="{:url('course/courseRebate', ['id' => $vo.id])}">分佣管理</a>&nbsp;&nbsp;
+
+						<a href="{:url('course/littleBecomeBigCourseList', ['id' => $vo.id])}">小转大列表</a>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

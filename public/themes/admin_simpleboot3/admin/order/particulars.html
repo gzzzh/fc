@@ -1,0 +1,184 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#">订单详情</a></li>
+		</ul>
+
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<td width="100">订单编号 : </td>
+					<td>{$info.order_number}</td>
+				</tr>
+
+				<tr>
+					<td width="100">课程供应商 : </td>
+					<td>
+						<foreach name="supplier_list" item="so">
+			    			<if condition="$info.supplier_id eq $so.id">{$so.name}</if>
+			    		</foreach>
+					</td>
+				</tr>
+
+
+				<tr>
+					<td width="100">课程ID : </td>
+					<td>
+						{$info.course_id}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">课程短标题 : </td>
+					<td>
+						{$info.title}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">课程售价 : </td>
+					<td>
+						{$info.sell_money}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">上课方式 : </td>
+					<td>
+						<if condition="$info.attend_type eq 1">
+							手机
+						<else />
+							兑换码
+						</if>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">是否有实物 : </td>
+					<td>
+						<if condition="$info.if_entity eq 1">
+							否
+						<else />
+							是
+						</if>
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">收货人 : </td>
+					<td>
+						{$info.recipients}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">手机号 : </td>
+					<td>
+						{$info.mobile}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">收货地址 : </td>
+					<td>
+						{$info.site}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">付款金额 : </td>
+					<td>
+						{$info.pay_money}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">付款时间 : </td>
+					<td>
+						{$info.pay_time}
+					</td>
+				</tr>
+
+
+				<tr>
+					<td width="100">付款凭证（微信支付凭证） : </td>
+					<td>
+						{$info.pay_voucher}
+					</td>
+				</tr>
+
+
+				<tr>
+					<td width="100">发货信息 : </td>
+					<td>
+						{$info.dispatch_msg}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">激活时间 : </td>
+					<td>
+						{$info.activate_time}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">付款时间 : </td>
+					<td>
+						{$info.pay_time}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">发货时间 : </td>
+					<td>
+						{$info.dispatch_time}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">收货时间 : </td>
+					<td>
+						{$info.delivery_time}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">退货完成时间 : </td>
+					<td>
+						{$info.refund_time}
+					</td>
+				</tr>
+
+				<tr>
+					<td width="100">订单状态 : </td>
+					<td>
+						<if condition="$info.status eq 1">
+							待发货
+						<elseif condition="$info.status eq 2" />
+							待收货
+						<elseif condition="$info.status eq 3" />
+							申请退款
+						<elseif condition="$info.status eq 4" />
+							已完成
+						<elseif condition="$info.status eq 5" />
+							已退款
+						<else />
+							非法状态
+						</if>
+					</td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><a href="{:url('order/index')}">返回列表</a></td>
+				</tr>
+			</thead>
+
+		</table>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

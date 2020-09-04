@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+		<meta name="format-detection" content="telephone=no"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width, viewport-fit=cover" />
+		<title>启蒙优选-选课</title>
+		<link rel="stylesheet" href="__TMPL__/home/public/assets/css/style.css" />
+		<link rel="stylesheet" href="__TMPL__/home/public/assets/css/swiper.min.css">
+	</head>
+	<style>
+		.swiper-container .swiper-pagination-bullet-active{background: #F93670;/* 两种都可以 */}
+	</style>
+	<body>
+		<!-- 个人中心 --> 
+		<div class="indexIndex">
+			<div class="content">
+				<!-- 顶部选择年龄、搜索、科目切换 -->
+				<div class="index_top">
+					<div class="search flex juscbtween">
+						<div class="left flex alitemCenter checkAge"><span>0~3岁</span><img src="__TMPL__/home/public/assets/img/bottom.png" alt=""></div>
+						<div class="right flex juscbtween">
+							<input type="text">
+							<img src="__TMPL__/home/public/assets/img/search.png" alt="">
+						</div>
+					</div>
+					<div class="curriculum_tab">
+						<span class="on">精选</span>
+						<foreach name="subject_list" item="vo">
+                            <span value="{$vo.id}">{$vo.name}</span>
+                        </foreach>
+						
+					</div>
+				</div>
+				<!-- 精选课程 -->
+				<div class="selected">
+					<div class="banner">
+						<div class="swiper-container">
+						    <div class="swiper-wrapper">
+                                <foreach name="banner_list" item="vo">
+                                   <a href="" class="swiper-slide"><img src="{$vo.logo}" alt=""></a>
+                                </foreach>
+						    </div>
+						    <!-- Add Pagination -->
+						    <div class="swiper-pagination"></div>
+						</div>
+					</div>
+					<div class="select_tab flex juscbtween">
+						<a href="" class="_item">
+							<img src="__TMPL__/home/public/assets/img/index/icon1.png" alt="">
+							<p>好书</p>
+						</a>
+						<a href="" class="_item">
+							<img src="__TMPL__/home/public/assets/img/index/icon2.png" alt="">
+							<p>体验课</p>
+						</a>
+						<a href="" class="_item">
+							<img src="__TMPL__/home/public/assets/img/index/icon3.png" alt="">
+							<p>0元学</p>
+						</a>
+						<a href="" class="_item">
+							<img src="__TMPL__/home/public/assets/img/index/icon4.png" alt="">
+							<p>共学营</p>
+						</a>
+						<a href="" class="_item">
+							<img src="__TMPL__/home/public/assets/img/index/icon5.png" alt="">
+							<p>育儿百科</p>
+						</a>
+					</div>
+					<div class="adv flex juscbtween">
+						<a href=""><img src="__TMPL__/home/public/assets/img/index/1.png" alt=""><span>如何上课</span></a>
+						<a href=""><img src="__TMPL__/home/public/assets/img/index/2.png" alt=""><span>课程顾问</span></a>
+					</div>
+					<a href="" class="advTwo"><img src="__TMPL__/home/public/assets/img/index/3.png" alt=""></a>
+				</div>
+				<!-- 课程列表 -->
+				<div class="curriculum_list">
+					<div class="select_title">爆款课程</div>
+					<a href="./good.html" class="curriculum_item">
+						<div class="curriculum_img">
+							<img src="__TMPL__/home/public/assets/img/curriculum_img.png" alt="">
+						</div>
+						<div class="info">
+							<h3>给孩子给孩子给孩子给孩子给孩子给孩子给孩子</h3>
+							<div class="type">
+								<span>思维课</span>
+								<span>思维课</span>
+								<span>思维课</span>
+							</div>
+							<div class="money flex juscbtween">
+								<div class="left">
+									<i>￥</i><b>99</b><span>￥44</span>
+								</div>
+								<div class="right">
+									<i>5.9万</i>人正在学习
+								</div>
+							</div>
+						</div>
+					</a>
+					<a href="./good.html" class="curriculum_item">
+						<div class="curriculum_img">
+							<img src="__TMPL__/home/public/assets/img/curriculum_img.png" alt="">
+							<p>距结束一天 10:10:10</p>
+						</div>
+						<div class="info">
+							<h3>给孩子给孩子给孩子给孩子给孩子给孩子给孩子</h3>
+							<div class="type">
+								<span>思维课</span>
+								<span>思维课</span>
+								<span>思维课</span>
+							</div>
+							<div class="money flex juscbtween">
+								<div class="left">
+									<i>￥</i><b>99</b><span>￥44</span>
+								</div>
+								<div class="right">
+									<i>5.9万</i>人正在学习
+								</div>
+							</div>
+						</div>
+					</a>
+					<a href="./good.html" class="curriculum_item">
+						<div class="curriculum_img">
+							<img src="__TMPL__/home/public/assets/img/curriculum_img.png" alt="">
+							<div class="sell_out">
+								<div class="sell_out_text">已售罄</div>
+							</div>
+						</div>
+						<div class="info">
+							<h3>给孩子给孩子给孩子给孩子给孩子给孩子给孩子</h3>
+							<div class="type">
+								<span>思维课</span>
+								<span>思维课</span>
+								<span>思维课</span>
+							</div>
+							<div class="money flex juscbtween">
+								<div class="left">
+									<i>￥</i><b>99</b><span>￥44</span>
+								</div>
+								<div class="right">
+									<i>5.9万</i>人正在学习
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<!-- 年龄选择弹框 -->
+			<div class="ageMask hideThis">
+				<div class="ageBox bubbling">
+					<h3>您的孩子处于</h3>
+					<p>请放心选择，随时可更改</p>
+                    <foreach name="age_list" item="vo">
+                        <div class="age_item" value="{$vo.id}">{$vo.name}</div>
+                    </foreach>
+					<div class="age_item on">全部年龄</div>
+				</div>
+			</div>
+
+			<!-- 首次登录弹框 -->
+			<div class="loginMask hideThis">
+				<div class="loginBox bubbling">
+					<h3>完善信息，可以获得更精准的推荐</h3>
+					<div class="sexBox flex juscenter">
+						<div class="sexItem"><img src="__TMPL__/home/public/assets/img/index/girl.png" alt=""><p>小公主</p></div>
+						<div class="sexItem"><img src="__TMPL__/home/public/assets/img/index/boy.png" alt=""><p>小王子</p></div>
+					</div>
+					<div class="baby_info flex juscbtween">
+						<b>宝宝昵称</b>
+						<input type="text" placeholder="请输入宝宝名">
+					</div>
+					<div class="baby_info flex juscbtween">
+						<b>宝宝生日</b>
+						<input type="text" id="dateSelectorOne" placeholder="请选择宝宝生日">
+					</div>
+					<button>确定</button>
+				</div>
+			</div>
+			<!-- 底部tab -->
+			<div id="bottmm" class="flex juscbtween">
+				<a href="./index.html" class="foot_item on">
+					<img src="__TMPL__/home/public/assets/img/foot/oneSelect.png" alt="">
+					<p>选课</p>
+				</a>
+				<!-- <a class="foot_item">
+					<img src="./img/foot/two.png" alt="">
+					<p>学习</p>
+				</a> -->
+				<a href="./user.html" class="foot_item">
+					<img src="__TMPL__/home/public/assets/img/foot/three.png" alt="">
+					<p>我的</p>
+				</a>
+			</div>
+		</div>
+	</body>
+	<script rel="stylesheet" src="__TMPL__/home/public/assets/js/jquery-2.0.3.min.js"></script>
+	<script rel="stylesheet" src="__TMPL__/home/public/assets/js/swiper.min.js"></script>
+	<script rel="stylesheet" src="__TMPL__/home/public/assets/js/iScroll.js"></script>
+	<script rel="stylesheet" src="__TMPL__/home/public/assets/js/Mdate.js"></script>
+	<script>
+		$(function(){
+			//点击课程科目切换
+			$('.curriculum_tab span').click(function(){
+				$(this).addClass('on').siblings('span').removeClass('on');
+			})
+
+			//精选轮播图
+		    var swiper = new Swiper('.swiper-container', {
+		       	loop:true,
+		      	pagination: {
+		        	el: '.swiper-pagination'
+		      	},
+		    });
+
+		    //选择年龄弹框显隐
+		    $('.checkAge').click(function(){
+		    	//点击选择显示
+		    	$('.ageMask').show();
+		    })
+		    $('.hideThis').click(function(){
+		    	//点击幕布区隐藏
+		    	$(this).hide();
+		    })
+		    $('.bubbling').click(function(){
+		    	return false;
+		    })
+
+		    //选择性别选中状态
+		    $('.sexItem').click(function(){
+		    	$(this).siblings().find('p').removeClass('on');
+		    	$(this).find('p').addClass('on');
+		    })
+
+		    //选择年龄段
+		    $('.age_item').click(function(){
+
+		    })
+
+		    //时间选择
+		    new Mdate("dateSelectorOne");
+
+		})
+	</script>
+</html>

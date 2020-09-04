@@ -1,0 +1,119 @@
+<include file="public@header"/>
+        <script type="text/javascript"src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('course/index')}">课程列表</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('course/saveCourseRebate')}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$info.id}" />
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>课程售价：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" value="{$info.sell_money}" disabled>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>平台佣金：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="commission" value="{$info.commission}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>一级佣金比例：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="one_rebate" value="{$info.one_rebate}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>一级佣金金额：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" value="{$info.commission * $info.one_rebate}" disabled>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>二级佣金比例：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="two_rebate" value="{$info.two_rebate}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>二级佣金金额：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" value="{$info.commission * $info.two_rebate}" disabled>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>培育奖比例：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="cultivate_rebate" value="{$info.cultivate_rebate}">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>培育奖金额：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" value="{$info.commission * $info.cultivate_rebate}" disabled>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>分红池比例：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="bonus_rebate" value="{$info.bonus_rebate}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>分红池增量：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" value="{$info.commission * $info.bonus_rebate}" disabled>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>平台利润率：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" value="{$info.qmyx_rate}" disabled>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span>平台利润：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" value="{$info.commission * $info.qmyx_rate}" disabled>
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="color: white;" ><a href="{:url('course/index')}">返回列表</a></span>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<include file="public@header"/>
+        <script type="text/javascript"src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('course/littleBecomeBigCourseList', ['id' => $id])}">课程-小课转大课列表</a></li>
+        <li class="active"><a href="{:url('course/addCourseBecome', ['id' => $id])}"><notempty name="info">编辑<else/>添加</notempty>小课转大课信息</a></li>
+        
+
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('course/saveCourseBecome')}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$id}" />
+        <notempty name="info"><input type="hidden" name="con_id" value="{$info.id}" /></notempty>
+
+
+      
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>达成条件：</label>
+            <div class="col-md-3 col-sm-6">
+                <input type="text" class="form-control" id="input-name" <notempty name="info">value="{$info.explain}"</notempty> name="explain" placeholder="请输入达成条件">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span> 平台佣金比例：</label>
+            <div class="col-md-3 col-sm-6">
+                <input type="text-local" class="form-control" id="input-rebate" onblur="fun();" <notempty name="info">value="{$info.rebate}"<else/>value=""</notempty> name="rebate" placeholder="课程方分给平台的总比例，如0.3">失去焦点，自动计算。
+            </div>
+        </div>
+
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span> 一级佣金比例：</label>
+            <div class="col-md-3 col-sm-6">
+                <input type="text-local" class="form-control" id="input-one" <notempty name="info">value="{$info.one_rebate}"</notempty> name="one_rebate" placeholder="默认是平台佣金比例 * 默认一级佣金比">
+            </div>
+        </div>
+
+
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required"></span> 二级佣金比例：</label>
+            <div class="col-md-3 col-sm-6">
+                <input type="text-local" class="form-control" id="input-two" <notempty name="info">value="{$info.two_rebate}"</notempty> name="two_rebate" placeholder="默认是平台佣金比例 * 默认二级佣金比">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="color: white;" ><a href="{:url('course/littleBecomeBigCourseList', ['id' => $id])}">返回</a></span>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    function fun(){
+       /* 失去焦点  */
+        var rebate = document.getElementById("input-rebate").value;
+        console.log(rebate);
+        console.log({$cinfo.one_rebate});
+
+        var one = rebate * 0.546;
+        var two = rebate * 0.2184;
+
+        var one = formatDecimal(one, 4);
+        var two = formatDecimal(two, 4);
+
+        //修改其他的值
+        document.getElementById("input-one").value=one;
+        document.getElementById("input-two").value=two;
+    };
+
+
+    function formatDecimal(num, decimal) {
+                num = num.toString()
+                let index = num.indexOf('.')
+                if (index !== -1) {
+                    num = num.substring(0, decimal + index + 1)
+                } else {
+                    num = num.substring(0)
+                }
+                return parseFloat(num).toFixed(decimal)
+    };
+</script>
+</body>
+</html>

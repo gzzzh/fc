@@ -1,0 +1,88 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('member/index')}">会员列表</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="get" action="{:url('Member/index')}">
+            用户ID:
+            <input type="text" class="form-control" name="member_id" style="width: 160px;" value="{:input('request.member_id/s','')}" placeholder="请输入用户ID">
+            
+            用户邀请码:
+            <input type="text" class="form-control" name="invite" style="width: 160px;" value="{:input('request.invite/s','')}" placeholder="请输入用户邀请码">
+
+            邀请人邀请码:
+            <input type="text" class="form-control" name="parent" style="width: 160px;" value="{:input('request.parent/s','')}" placeholder="请输入邀请人邀请码">
+            <input type="submit" class="btn btn-primary" value="搜索" />
+        </form>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>用户头像</th>
+					<th>昵称</th>
+					<th>等级</th>
+					<th>邀请码</th>
+					<th>邀请人邀请码</th>
+					<th>微信ID</th>
+					<th>手机号</th>
+					<th>账号余额</th>
+					<th>注册时间</th>
+					<th>直邀人数</th>
+					<th>扩邀人数</th>
+					<th>用户状态</th>
+					<th width="140">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="users" item="vo">
+				<tr>
+					<td>{$vo.member_id}</td>
+					<td><img src="{$vo.logo}"></td>
+					<td>{$vo.nickname}</td>
+					<td>
+						<if condition="$vo.grade eq 1">
+							普通用户
+						<elseif condition="$vo.grade eq 2">
+							顾问
+						<elseif condition="$vo.grade eq 3">
+							星级顾问
+						<else/>
+							联创合伙人
+						</if>
+					</td>
+					<td>{$vo.invite}</td>
+					<td>{$vo.parent}</td>
+
+					<td>{$vo.open_id}</td>
+					<td>{$vo.mobile}</td>
+					<td>{$vo.money}</td>
+					<td>{$vo.add_time}</td>
+					<td>0</td>
+					<td>0</td>
+					<td>
+						<if condition="$vo.status eq 1">
+							<span class="label label-success">正常</span>
+						<else />
+							<span class="label label-danger">禁用</span>
+						
+						</if>
+					</td>
+
+					<td>
+						<if condition="$vo.status eq 1">
+							<a href="{:url('Member/editStatus', ['member_id' => $vo.member_id, 'type' => 'no'])}" onClick="return confirm('确定拉黑该用户?');">拉黑</a>
+						<else />
+							<a href="{:url('Member/editStatus', ['member_id' => $vo.member_id, 'type' => 'yes'])}" onClick="return confirm('确定解禁该用户?');">解禁</a>
+						</if>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

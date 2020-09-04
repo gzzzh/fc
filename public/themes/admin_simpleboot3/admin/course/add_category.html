@@ -1,0 +1,39 @@
+<include file="public@header"/>
+        <script type="text/javascript"src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('course/categoryIndex')}">课程品类列表</a></li>
+        <li class="active"><a href="{:url('course/addCategory')}"><notempty name="info">编辑<else/>添加</notempty>课程品类</a></li>
+        
+
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('course/saveCategory')}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$id}" />
+        <notempty name="info"><input type="hidden" name="con_id" value="{$info.id}" /></notempty>
+
+
+      
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>品类名称：</label>
+            <div class="col-md-3 col-sm-6">
+                <input type="text" class="form-control" id="input-name" <notempty name="info">value="{$info.name}"</notempty> name="name" placeholder="请输入课程品类的名称">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="color: white;" ><a href="{:url('course/categoryIndex')}">返回</a></span>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

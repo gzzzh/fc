@@ -1,0 +1,485 @@
+<include file="public@header"/>
+        <script type="text/javascript"src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('course/index')}">课程列表</a></li>
+        <empty name='info'>
+           <li class="active"><a href="{:url('course/add')}">添加课程</a></li>
+        <else/>
+            <li class="active"><a href="{:url('course/add', ['id' => $info.id])}">编辑课程</a></li>
+        </empty>
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('course/save')}" method="post" enctype="multipart/form-data">
+        <notempty name='info'><input type="hidden" name="id" value="{$info.id}" /></notempty>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>品类：</label>
+            <div class="col-md-6 col-sm-10">
+                <select name="category_id" class="form-control" id="categoryId">
+                    <foreach name="category_list" item='vo'>
+                        <option value="{$vo.id}" <notempty name='info'><if condition="$info.category_id eq $vo.id">selected</if></notempty>>{$vo.name}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>供应商：</label>
+            <div class="col-md-6 col-sm-10">
+                <select name="supplier_id" class="form-control">
+                    <foreach name="sup_info" item='vo'>
+                        <option value="{$vo.id}" <notempty name='info'><if condition="$info.supplier_id eq $vo.id">selected</if></notempty>>{$vo.name}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>标题：</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-name" name="title" placeholder="请输入短标题" <notempty name='info'>value="{$info.title}"</notempty>>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>发货方式：</label>
+            <div class="col-md-2 col-sm-4">
+                <select name="attend_type" class="form-control">
+                    <option value="1" <notempty name='info'><if condition="$info.attend_type eq 1">selected</if></notempty> >手机号</option>
+                    <option value="2" <notempty name='info'><if condition="$info.attend_type eq 2">selected</if></notempty> >兑换码</option>
+                    <option value="3" <notempty name='info'><if condition="$info.attend_type eq 3">selected</if></notempty> >实物（快递）</option>
+                </select>
+            </div>
+
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>运费：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="postage" placeholder="请输入运费" <notempty name='info'>value="{$info.postage}"<else/>value="0"</notempty>>
+            </div>
+        </div>
+
+    <style>
+        input{ outline: none; }
+        a{color:#7796ec;text-decoration: none;}
+        .flex { display: flex; display: -webkit-flex; display: -ms-flex; }
+        .juscbtween{justify-content: space-between;align-items: center;}
+        .juscbtweenOnly{justify-content: space-between;}
+        .juscenter{justify-content: center;align-items: center;}
+        .alitemCenter{align-items: center;}
+        .flexdirection{flex-direction: column;}
+        .flexWrap{flex-wrap: wrap;}
+        .fl { float: left; }
+        .fr { float: right; }
+        .skuRight{width:60%;}
+        .clear:before,
+        .clear:after { display: block; content: ''; clear: both; }
+        .attributeItem{margin-top:10px;}
+        .addOneAttributeItem{display:inline-block; cursor: pointer;padding:0 10px;height:30px;border:1px solid #969696;color:#000;background:#e1e1e1;text-align:center;line-height:28px;}
+        .addOneAttributeVal{display:inline-block; cursor: pointer;padding:0 10px;height:30px;border:1px solid #969696;color:#000;background:#e1e1e1;text-align: center;line-height:28px;}
+        #creadOrRefreshSku{display:inline-block; cursor: pointer;padding:0 10px;height:30px;border:1px solid #969696;color:#000;background:#e1e1e1;text-align: center;line-height:28px;}
+        .attributeItem .attributeValList .attributeValItem{margin-bottom:10px;margin-right: 10px;padding:3px 5px;border:1px solid #ccc;}
+        .attributeItem .attributeValList .attributeValItem input{border:none;background:transparent;}
+        .attributeItem .attributeName{min-width:200px;}
+        .attributeItem .attributeName input{width:174px;height:30px;border:1px solid #ccc;padding:0 5px;}
+        .attributeItem .attributeValList .attrBar .delOneItem{padding-left:10px;color:#7796ec;text-decoration: none;}
+        .skuListBox table{background: #f5f5f5; border-collapse: collapse; border-spacing: 0;margin-top: 10px;}
+        .skuListBox table tr td,.skuListBox table tr th{border:1px solid #ccc;padding:5px 10px;font-size:12px;}
+        .skuListBox table tr td input{width:100%;height:25px;border:1px solid #ddd;border-top:1px solid #a7b2c3;padding-left:5px;width:100px;}
+    </style>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>销售属性：</label>
+            <div class="right skuRight fl">
+                <div class="attributeBox">
+
+                </div>
+                <div class="addOneAttributeItem">添加销售属性</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>SKU列表：</label>
+            <div class="right skuRight fl">
+                <div id="creadOrRefreshSku">生成或刷新SKU表</div>
+                <div class="skuListBox" id="skuListBox">
+                </div>
+            </div>
+        </div>
+
+         <!-- <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>原标题：</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-name" name="long_title" placeholder="请输入原标题" <notempty name='info'>value="{$info.long_title}"</notempty>>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>售价：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="sell_money" placeholder="请输入售价" <notempty name='info'>value="{$info.sell_money}"</notempty>>
+            </div>
+
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>原价：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="original_money" placeholder="请输入原价" <notempty name='info'>value="{$info.original_money}"</notempty>>
+            </div>
+        </div>
+
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>佣金【元】</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="commission" placeholder="请输入佣金金额，不能大于售价" <notempty name='info'>value="{$info.commission}"</notempty>>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>课程总量：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="inventory_number" placeholder="请输入课程总量" <notempty name='info'>value="{$info.inventory_number}"</notempty>>
+            </div>
+        </div> -->
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>适合年龄：</label>
+            <div class="col-md-6 col-sm-10">
+                <foreach name="age_stage_list" item='vo'>
+                    <notempty name='info'>
+                            <input type="checkbox"  name="age_stage_list[]" value="{$vo.id}" <in name="$vo.id" value="$info.age_stage_list">checked</in> />&nbsp;{$vo.name} &nbsp;&nbsp;&nbsp;
+                    <else />
+                        <input type="checkbox"  name="age_stage_list[]" value="{$vo.id}" <in name="$vo.id"/>&nbsp;{$vo.name} &nbsp;&nbsp;&nbsp;
+                    </notempty>
+                </foreach> 
+                <span style="color: red;">可多选</span>
+            </div>
+        </div>
+
+         <div class="form-group">
+             <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>所属学科：</label>
+            <div class="col-md-6 col-sm-10" id="suoshuStady">
+                <foreach name="subject_list" item='vo'>
+                    <notempty name='info'>
+                        <input type="checkbox"  name="subject_list[]" value="{$vo.id}" <in name="$vo.id" value="$info.subject_list">checked</in> />&nbsp;{$vo.name} &nbsp;&nbsp;&nbsp;
+                     <else />
+                        <input type="checkbox"  name="subject_list[]" value="{$vo.id}" />&nbsp;{$vo.name} &nbsp;&nbsp;&nbsp;
+                      </notempty>
+                </foreach>
+               <span style="color: red;">可多选</span>
+            </div>
+            <notempty name='info'>
+                <foreach name="$info.subject_list" item='vo'>
+                    <input type="hidden" value="{$vo}" class="studyXuekeCheckList">
+                </foreach>
+             </notempty>
+         </div>
+
+
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>展示标签：</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-name" name="course_label" placeholder="可输入多个标签，用英文逗号分隔，用于前端展示" <notempty name='info'>value="{$info.course_label}"</notempty>>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>推广标签：</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-name" name="course_internal_label" placeholder="可输入多个标签，用英文逗号分隔，用于服务端商品的分发归类" <notempty name='info'>value="{$info.course_internal_label}"</notempty>>
+            </div>
+        </div>
+
+
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>推荐语：</label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control" name="explain" placeholder="说明课程亮点或注意事项，支持多行输入"><notempty name='info'>{$info.explain}</notempty></textarea>
+                
+            </div>
+        </div>
+
+
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>是否有实物礼包：</label>
+            <div class="col-md-2 col-sm-4">
+                 <select name="if_entity" class="form-control">
+                    <option value="1" <notempty name='info'><if condition="$info.if_entity eq 1">selected</if></notempty> >否</option>
+                    <option value="2" <notempty name='info'><if condition="$info.if_entity eq 2">selected</if></notempty> >是</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>激活说明/配送说明：</label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control" name="activate_method" placeholder="说明激活方式及地址，支持多行输入"><notempty name='info'>{$info.activate_method}</notempty></textarea>
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>激活时间/发货时间：</label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control" name="activate_time" placeholder="说明激活有效期，支持多行输入"><notempty name='info'>{$info.activate_time}</notempty></textarea>
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>退款政策：</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-name" name="refund" placeholder="退款政策说明" <notempty name='info'>value="{$info.refund}"</notempty>>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>是否开启秒杀：</label>
+            <div class="col-md-2 col-sm-4">
+                <select name="if_seckill" class="form-control">
+                    <option value="1" <notempty name='info'><if condition="$info.if_seckill eq 1">selected</if></notempty> >否</option>
+                    <option value="2" <notempty name='info'><if condition="$info.if_seckill eq 2">selected</if></notempty> >是</option>
+                </select>
+                <span>开始秒杀，前端会提示倒计时</span>
+            </div>
+            
+
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>销量基数：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="basic_number" placeholder="请输入销量基数" <notempty name='info'>value="{$info.basic_number}"</notempty>>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>是否收集年龄：</label>
+            <div class="col-md-2 col-sm-4">
+                <select name="if_collection" class="form-control">
+                    <option value="2" <notempty name='info'><if condition="$info.if_collection eq 2">selected</if></notempty> >否</option>
+                    <option value="1" <notempty name='info'><if condition="$info.if_collection eq 1">selected</if></notempty> >是</option> 
+                </select>
+            </div>
+
+
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>是否收集生日：</label>
+            <div class="col-md-2 col-sm-4">
+                <select name="if_birthday" class="form-control">
+                    <option value="2" <notempty name='info'><if condition="$info.if_birthday eq 2">selected</if></notempty> >否</option>
+                    <option value="1" <notempty name='info'><if condition="$info.if_birthday eq 1">selected</if></notempty> >是</option> 
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>是否宝宝昵称：</label>
+            <div class="col-md-2 col-sm-4">
+                <select name="if_nickname" class="form-control">
+                    <option value="2" <notempty name='info'><if condition="$info.if_nickname eq 2">selected</if></notempty> >否</option>
+                    <option value="1" <notempty name='info'><if condition="$info.if_nickname eq 1">selected</if></notempty> >是</option> 
+                </select>
+            </div>
+
+
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>是否收集地址：</label>
+            <div class="col-md-2 col-sm-4">
+                <select name="if_site" class="form-control">
+                    <option value="2" <notempty name='info'><if condition="$info.if_site eq 2">selected</if></notempty> >否</option>
+                    <option value="1" <notempty name='info'><if condition="$info.if_site eq 1">selected</if></notempty> >是</option> 
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>推荐图：</label>
+             <div class="col-md-6 col-sm-10">
+                <p>用于推荐图，可上传一张，最佳尺寸690*145像素</p>
+                <input id="photo-1" type="hidden" name="tj_logo" >
+                <input id="photo-1-name" type="text" name="photo_name" title="课程推荐图">
+                <img id="photo-1-preview" style="width: 50px;width: 50px" <notempty name='info'>src="/upload/{$info.tj_logo}"</notempty>>
+                <a href="javascript:uploadOneImage('图片上传','#photo-1');">上传</a>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>主图：</label>
+             <div class="col-md-6 col-sm-10">
+                <p>用于详情页轮播顶图，可上传多张，最佳尺寸690*145像素</p>
+                 <notempty name='info'>
+                    <foreach name="info.zt_logo" item="zt">
+                       <ul>
+                        <li>
+                            <img id="photo-2-preview" class="zt_logo" style="width: 50px;width: 50px" src="/upload/{$zt}">
+                        </li>
+                       </ul>
+                    </foreach>
+                </notempty>
+
+                <ul id="photos" class="pic-list unstyled"><notempty name='info'>上传后,替换结果如下</notempty></ul>
+                <a href="javascript:uploadMultiImage('图片上传','#photos', 'photos-item-wrapper');">上传</a>
+                <script type="text/html" id="photos-item-wrapper">
+                    <li id="savedimage{id}">
+                        <input id="photo-{id}" type="hidden" name="zt_logo[]" value="{filepath}"> 
+                        <input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+                        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+                        <a href="javascript:uploadOneImage('图片上传','#photo-{id}');">替换</a>
+                        <a href="javascript:(function(){$('#savedimage{id}').remove();})();">移除</a>
+                    </li>
+                </script>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>小图：</label>
+             <div class="col-md-6 col-sm-10">
+                <p>用于订单列表页和订单详情页，限上传一张，最佳尺寸100*100像素</p>
+                <input id="photo-3" type="hidden" name="xt_logo" >
+                <input id="photo-3-name" type="text" name="photo3_name" title="课程小图" >
+                <img id="photo-3-preview" style="width: 50px;width: 50px" <notempty name='info'>src="/upload/{$info.xt_logo}"</notempty>>
+                <a href="javascript:uploadOneImage('图片上传','#photo-3');">上传</a>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>介绍图：</label>
+             <div class="col-md-6 col-sm-10">
+                <p>用于详情页课程介绍，可上传多张，最佳尺寸690*145像素</p>
+                 <notempty name='info'>
+                    <foreach name="info.js_logo" item="js">
+                       <ul>
+                        <li>
+                            <img id="photo-2-preview" class="js_logo" style="width: 50px;width: 50px" src="/upload/{$js}">
+                        </li>
+                       </ul>
+                    </foreach>
+                </notempty>
+
+                <ul id="photosjs" class="pic-list unstyled"><notempty name='info'>上传后,替换结果如下：</notempty></ul>
+                <a href="javascript:uploadMultiImage('图片上传','#photosjs', 'photosjs-item-wrapper');">上传</a>
+                <script type="text/html" id="photosjs-item-wrapper">
+                    <li id="savedimagejs{id}">
+                        <input id="photojs-{id}" type="hidden" name="js_logo[]" value="{filepath}"> 
+                        <input id="photojs-{id}-name" type="text" name="photosjs_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+                        <img id="photojs-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+                        <a href="javascript:uploadOneImage('图片上传','#photojs-{id}');">替换</a>
+                        <a href="javascript:(function(){$('#savedimagejs{id}').remove();})();">移除</a>
+                    </li>
+                </script>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>购前须知：</label>
+
+            <div class="col-md-6 col-sm-10" id="buy_notice">
+                <p>HTML文本编译器，支持编译文字大小，颜色，控制换行，支持插入图片</p>
+            </div>
+            <script type="text/javascript">
+                var ue = UE.getEditor('buy_notice',{initialFrameWidth:800,initialFrameHeight:400});
+               <notempty name='info'>
+                ue.ready(function(){
+                    ue.setContent("{$info.buy_notice}");
+                });
+                </notempty>
+            </script>
+        </div>
+      
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>开始时间：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="datetime-local" class="form-control" id="input-name" name="start_time" <notempty name='info'>value="{$info.start_time}"</notempty>>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>结束时间：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="datetime-local" class="form-control" id="input-name" name="end_time" <notempty name='info'>value="{$info.end_time}"</notempty>>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>排序：</label>
+            <div class="col-md-2 col-sm-4">
+                <input type="text" class="form-control" id="input-name" name="sort" placeholder="请输入短标题" <notempty name='info'>value="{$info.sort}"<else />value="0"</notempty>>
+            </div>
+        </div>
+
+    
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>状态：</label>
+            <div class="col-md-2 col-sm-4">
+                 <select name="status" class="form-control">
+                    <option value="1" <notempty name='info'><if condition="$info.status eq 1">selected</if></notempty> >上架</option>
+                    <option value="2" <notempty name='info'><if condition="$info.status eq 2">selected</if></notempty> >下架</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="color: white;" ><a href="{:url('course/index')}">返回</a></span>
+
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/addSku.js"></script>
+</body>
+</html>
+ <script>
+ $(function(){
+    function getXuekeList(id){
+        $.ajax({
+            url: '{:url("course/categoryGetCourseSubject")}',
+            type: 'POST',
+            data: {id:id},
+        })
+        .done(function(res) {
+            if(res.code == 0){
+                var htm = '';
+                var list = [];
+                $('.studyXuekeCheckList').each(function(k,v){
+                    list.push($(this).val());
+                });
+                if(res.data.length>0){
+                    for(let i=0;i<res.data.length;i++){
+                        if($.inArray(res.data[i].id.toString(),list) != -1){
+                            htm += `<input type="checkbox" checked name="subject_list[]" value="`+res.data[i].id+`" />&nbsp;`+res.data[i].name+` &nbsp;&nbsp;&nbsp;`;
+                        }else{
+                            htm += `<input type="checkbox"  name="subject_list[]" value="`+res.data[i].id+`" />&nbsp;`+res.data[i].name+` &nbsp;&nbsp;&nbsp;`;
+                        }
+                    }
+                }
+                $('#suoshuStady').html(htm);
+            }
+        })
+        .fail(function(err) {
+            console.log(err);
+        })
+    }
+    var id = $('#categoryId option:selected').val();
+        getXuekeList(id);
+
+    $('#categoryId').change(function(){
+        id = $(this).val();
+        getXuekeList(id);
+    })
+    
+ })
+ </script>

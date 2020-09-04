@@ -1,0 +1,45 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('age/index')}">年龄段列表</a></li>
+        <empty name='info'>
+           <li class="active"><a href="{:url('age/add')}">添加年龄段</a></li>
+        <else/>
+            <li class="active"><a href="{:url('age/add', ['id' => $info.id])}">编辑年龄段</a></li>
+        </empty>
+
+        
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('age/save')}" method="post" enctype="multipart/form-data">
+        <notempty name='info'><input type="hidden" name="id" value="{$info.id}" /></notempty>
+
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>年龄段名称：</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-name" name="name" placeholder="年龄段名称" <notempty name='info'>value="{$info.name}"</notempty>>
+            </div>
+        </div>
+
+
+         <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>备注：</label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control" style="height: 200px;" name="remark" placeholder="年龄段备注，支持多行输入"><notempty name='info'>{$info.remark}</notempty></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="color: white;" ><a href="{:url('age/index')}">返回</a></span>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
